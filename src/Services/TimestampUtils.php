@@ -63,12 +63,22 @@ final class TimestampUtils
 
     /**
      * Do the timestamp, verify it and return path to saved token on disk along with extracted timestamp
+     * 
+     * ASN1 TOKEN CREATION POINT for timestamp export:
+     * This method handles the RFC 3161 timestamping process that creates the ASN.1 token
+     * which will be packaged alongside the JSON/PDF data in the timestamp archive.
+     * 
+     * Process:
+     * 1. Creates OpenSSL timestamp request from data file
+     * 2. Sends request to Timestamp Authority (TSA)
+     * 3. Receives and saves ASN.1 DER encoded timestamp token
+     * 4. Verifies the timestamp token
      */
     public function timestamp(): TimestampResponse
     {
         $requestFilePath = $this->createRequestfile();
         $response = $this->postData($requestFilePath);
-        // save token to (temporary) file
+        // save token to (temporary) file - this is the ASN.1 timestamp token
         $this->cacheFs->write(basename($this->tsResponse->tokenPath), $response->getBody()->getContents());
         $this->verify();
         return $this->tsResponse;

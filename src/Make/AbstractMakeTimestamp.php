@@ -59,12 +59,18 @@ abstract class AbstractMakeTimestamp extends AbstractMake implements MakeTimesta
 
     /**
      * Get the data that will be timestamped and saved in the timestamp archive
+     * 
+     * JSON/PDF DATA GENERATION POINT for timestamp export:
+     * This method determines what type of data file will be created and packaged
+     * with the ASN1 timestamp token in the final archive.
      */
     #[Override]
     public function generateData(): string
     {
         return match ($this->dataFormat) {
+            // Generate complete JSON export of entity data for timestamping
             ExportFormat::Json => $this->generateJson(),
+            // Generate PDF/A document for timestamping  
             ExportFormat::Pdf, ExportFormat::PdfA => $this->generatePdf(),
             default => throw new ImproperActionException('Incorrect data format for timestamp action'),
         };
@@ -96,8 +102,16 @@ abstract class AbstractMakeTimestamp extends AbstractMake implements MakeTimesta
         return $this->Db->execute($req);
     }
 
+    /**
+     * Generate JSON data for timestamping
+     * 
+     * JSON CONTENT CREATION POINT:
+     * Uses MakeFullJson to create a complete export of entity data that will be
+     * packaged as the .json file in the timestamp archive alongside the .asn1 token
+     */
     private function generateJson(): string
     {
+        // Create complete JSON export including all entity information
         $MakeJson = new MakeFullJson(array($this->entity));
         return $MakeJson->getFileContent();
     }

@@ -17,6 +17,14 @@ use Elabftw\Traits\ProcessTrait;
 
 /**
  * Trusted Timestamping (RFC3161) response object
+ * 
+ * FILE PATH MANAGEMENT for timestamp export assembly:
+ * This class holds the paths to the two main components of a timestamp export:
+ * - dataPath: temporary file containing the JSON/PDF data to be timestamped
+ * - tokenPath: temporary file containing the ASN.1 timestamp token from TSA
+ * 
+ * These files are later assembled into a ZIP archive by AbstractMakeTrustedTimestamp::saveTimestamp()
+ * 
  * @final mocked in tests
  */
 class TimestampResponse
