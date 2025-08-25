@@ -60,6 +60,10 @@ The documentation explains everything:
 
 ## [Installation instructions](https://doc.elabftw.net)
 
+## Developer Documentation
+
+For developers working on the codebase, see [TIMESTAMP_EXPORT_WORKFLOW.md](./TIMESTAMP_EXPORT_WORKFLOW.md) for details on how JSON and ASN1 files are assembled for timestamp export.
+
 # Contributing
 
 **eLabFTW** is a collaborative project. Your contributions are very welcome! Have a look at the [contributing page](https://doc.elabftw.net/contributing.html) to see how you can help with translation or code.
